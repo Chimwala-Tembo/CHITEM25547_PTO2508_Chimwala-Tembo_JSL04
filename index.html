@@ -6,7 +6,6 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;1,400&display=swap"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="./styles.css" />
     <link
       rel="icon"
@@ -14,24 +13,28 @@
       sizes="32x32"
       href="./assets/favicon.svg"
     />
+    <!--
+      Load initialData.js BEFORE scripts.js so that the initialTasks array
+      is available as a global variable when scripts.js executes.
+    -->
+    <script defer src="./initialData.js"></script>
     <script defer src="./scripts.js"></script>
     <title>Kanban Task Management</title>
   </head>
 
   <body>
-    <!-- Navigation Sidebar: Contains the logo, navigation links for boards, and theme toggle. -->
+    <!-- Sidebar Navigation: Logo + board list -->
     <nav class="side-bar" id="side-bar-div">
       <div id="side-logo-div">
         <img id="logo" src="./assets/logo-light.svg" alt="logo-light" />
       </div>
-
       <div class="boards-nav-links-div" id="boards-nav-links-div">
         <h4 id="headline-sidepanel">ALL BOARDS (1)</h4>
         <button class="board-btn">Launch Career</button>
       </div>
     </nav>
 
-    <!-- Main Layout: Header with board title, add task button, and main content area for task columns. -->
+    <!-- Main Layout: Header + board columns -->
     <div id="layout">
       <header id="header" class="sticky-header">
         <div class="header-name-div">
@@ -48,46 +51,105 @@
 
       <div class="container">
         <main class="card-column-main">
-          <!-- Task Columns: Display tasks grouped by status (TODO, DOING, DONE). -->
+          <!-- TODO Column: Tasks injected dynamically by scripts.js -->
           <div class="column-div" data-status="todo">
             <div id="todo-head-div" class="column-head-div">
               <span class="dot" id="todo-dot"></span>
-              <h4 id="toDoText" class="columnHeader">TODO (4)</h4>
+              <h4 id="toDoText" class="columnHeader">TODO (0)</h4>
             </div>
-            <!-- Tasks container for TODO -->
-            <div class="tasks-container">
-              <div class="task-div">Launch Epic Career 🚀</div>
-              <div class="task-div">Conquer React⚛️</div>
-              <div class="task-div">Understand Databases⚙️</div>
-              <div class="task-div">Crush Frameworks🖼️</div>
-            </div>
+            <div class="tasks-container"></div>
           </div>
-          <!-- DOING Column -->
+
+          <!-- DOING Column: Tasks injected dynamically by scripts.js -->
           <div class="column-div" data-status="doing">
             <div id="doing-head-div" class="column-head-div">
               <span class="dot" id="doing-dot"></span>
-              <h4 id="doingText" class="columnHeader">DOING (2)</h4>
+              <h4 id="doingText" class="columnHeader">DOING (0)</h4>
             </div>
-            <!-- Tasks container for DOING -->
-            <div class="tasks-container">
-              <div class="task-div">Master JavaScript 💛</div>
-              <div class="task-div">Never Give Up 🏆</div>
-            </div>
+            <div class="tasks-container"></div>
           </div>
-          <!-- DONE Column -->
+
+          <!-- DONE Column: Tasks injected dynamically by scripts.js -->
           <div class="column-div" data-status="done">
             <div id="done-head-div" class="column-head-div">
               <span class="dot" id="done-dot"></span>
-              <h4 id="doneText" class="columnHeader">DONE (2)</h4>
+              <h4 id="doneText" class="columnHeader">DONE (0)</h4>
             </div>
-            <!-- Tasks container for DONE -->
-            <div class="tasks-container">
-              <div class="task-div">Explore ES6 Features 🚀</div>
-              <div class="task-div">Have fun 🥳</div>
-            </div>
+            <div class="tasks-container"></div>
           </div>
         </main>
       </div>
     </div>
+
+    <!--
+      Task Modal: Uses the native <dialog> element for built-in accessibility,
+      focus trapping, and backdrop support. Opened via dialog.showModal() in JS.
+    -->
+    <dialog id="task-modal">
+      <form method="dialog" id="task-form">
+        <!-- Modal Header: Title + close button -->
+        <div class="modal-header">
+          <h3 class="modal-title">Task</h3>
+          <button
+            type="button"
+            class="modal-close-btn"
+            id="modal-close-btn"
+            aria-label="Close modal"
+          >
+            &#x2715;
+          </button>
+        </div>
+
+        <!-- Title field -->
+        <label class="modal-label" for="modal-title-input">Title</label>
+        <input
+          type="text"
+          id="modal-title-input"
+          class="modal-input"
+          placeholder="Task title"
+        />
+
+        <!-- Description field -->
+        <label class="modal-label" for="modal-description-input"
+          >Description</label
+        >
+        <textarea
+          id="modal-description-input"
+          class="modal-textarea"
+          placeholder="Task description"
+        ></textarea>
+
+        <!-- Status dropdown -->
+        <label class="modal-label" for="modal-status-select">Status</label>
+        <div class="modal-select-wrapper">
+          <select id="modal-status-select" class="modal-select">
+            <option value="todo">todo</option>
+            <option value="doing">doing</option>
+            <option value="done">done</option>
+          </select>
+          <!-- Custom chevron — pointer-events: none so clicks reach the select -->
+          <svg
+            class="select-chevron"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <!-- Save button -->
+        <button type="button" id="modal-save-btn" class="modal-save-btn">
+          Create Task
+        </button>
+      </form>
+    </dialog>
   </body>
 </html>
