@@ -10,6 +10,7 @@
   --secondary-color: #f4f7fd;
   --primary-font-color: #000000;
   --secondary-font-color: #828fa3;
+  --accent-color: #635fc7;
   --primary-box-shadow: 0px 4px 6px rgba(54, 78, 126, 0.1015); /* Subtle shadow for card depth */
   --sidebar-width: 300px; /* Sidebar fixed width */
 }
@@ -71,7 +72,7 @@ h4 {
   display: flex;
   align-items: center;
   gap: 10px; /* Space between icon and text */
-  background-color: #635fc7;
+  background-color: var(--accent-color);
   color: #fff;
   border: none;
   border-radius: 0 100px 100px 0; /* Pill shape only on right side */
@@ -209,6 +210,164 @@ header {
 h2 {
   font-size: 1.5rem;
   margin: 0;
+}
+
+/* ========================
+   Native <dialog> Modal
+   Opened via dialog.showModal() — places the element in the browser top layer.
+======================== */
+
+/* Dialog container — removes browser defaults and centres the card */
+#task-modal {
+  border: none;
+  border-radius: 8px;
+  padding: 32px;
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--primary-color);
+  box-shadow: 0 10px 40px rgba(54, 78, 126, 0.2);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Semi-transparent dark overlay behind the modal */
+#task-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Header row: "Task" title + red × close button */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.modal-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--primary-font-color);
+  margin: 0;
+}
+
+/* Red × close button — matches Figma design */
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #ea5555;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  opacity: 0.75;
+}
+
+/* Small muted labels above each field */
+.modal-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--secondary-font-color);
+  margin-bottom: 4px;
+}
+
+/* Title text input */
+.modal-input {
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--primary-font-color);
+  background-color: var(--primary-color);
+  border: 1px solid #e4ebfa;
+  border-radius: 4px;
+  padding: 10px 16px;
+  width: 100%;
+  outline: none;
+  margin-bottom: 16px;
+}
+
+.modal-input:focus {
+  border-color: var(--accent-color);
+}
+
+/* Description textarea */
+.modal-textarea {
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--primary-font-color);
+  background-color: var(--primary-color);
+  border: 1px solid #e4ebfa;
+  border-radius: 4px;
+  padding: 10px 16px;
+  width: 100%;
+  min-height: 112px;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 16px;
+}
+
+.modal-textarea:focus {
+  border-color: var(--accent-color);
+}
+
+/* Wrapper positions the custom chevron SVG over the select */
+.modal-select-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+/* Status select — appearance: none removes the native browser arrow */
+.modal-select {
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--primary-font-color);
+  background-color: var(--primary-color);
+  border: 1px solid #e4ebfa;
+  border-radius: 4px;
+  padding: 10px 40px 10px 16px;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.modal-select:focus {
+  border-color: var(--accent-color);
+}
+
+/* Custom chevron pinned to the right; pointer-events: none lets clicks reach the select */
+.select-chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--accent-color);
+}
+
+/* Full-width purple pill button — matches Figma "Create Task" button */
+.modal-save-btn {
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 100px;
+  padding: 14px 24px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.modal-save-btn:hover {
+  background-color: #a8a4ff;
 }
 
 /* ========================
